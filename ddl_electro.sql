@@ -19,3 +19,160 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.clientes
     OWNER to postgres;
+
+    -- Table: public.empleados
+
+-- DROP TABLE IF EXISTS public.empleados;
+
+CREATE TABLE IF NOT EXISTS public.empleados
+(
+    emp_cod integer NOT NULL,
+    emp_nombre character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    emp_apellido character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    emp_nacimiento date,
+    emp_tel integer,
+    CONSTRAINT emp_cod PRIMARY KEY (emp_cod)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.empleados
+    OWNER to postgres;
+
+    -- Table: public.transportista
+
+-- DROP TABLE IF EXISTS public.transportista;
+
+CREATE TABLE IF NOT EXISTS public.transportista
+(
+    transp_cod integer NOT NULL DEFAULT nextval('transportista_transp_cod_seq'::regclass),
+    transp_nombre character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    transp_telefono character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT transp_cod PRIMARY KEY (transp_cod)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.transportista
+    OWNER to postgres;
+
+    -- Table: public.proveedor
+
+-- DROP TABLE IF EXISTS public.proveedor;
+
+CREATE TABLE IF NOT EXISTS public.proveedor
+(
+    prov_cod integer NOT NULL DEFAULT nextval('proveedor_prov_cod_seq'::regclass),
+    prov_nombre character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    "prov_nombre/contac" character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    prov_direccion character varying(20) COLLATE pg_catalog."default",
+    prov_pais character varying(20) COLLATE pg_catalog."default",
+    CONSTRAINT prov_cod PRIMARY KEY (prov_cod)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.proveedor
+    OWNER to postgres;
+
+    -- Table: public.categoria
+
+-- DROP TABLE IF EXISTS public.categoria;
+
+CREATE TABLE IF NOT EXISTS public.categoria
+(
+    categ_cod integer NOT NULL DEFAULT nextval('categoria_categ_cod_seq'::regclass),
+    categ_nombre character varying(40) COLLATE pg_catalog."default",
+    categ_descripcion character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT categ_cod PRIMARY KEY (categ_cod)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.categoria
+    OWNER to postgres;
+
+    -- Table: public.productos
+
+-- DROP TABLE IF EXISTS public.productos;
+
+CREATE TABLE IF NOT EXISTS public.productos
+(
+    prod_cod integer NOT NULL DEFAULT nextval('productos_prod_cod_seq'::regclass),
+    prod_nombre character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    prov_cod integer NOT NULL,
+    categ_cod integer NOT NULL,
+    prod_cantidad integer,
+    prod_precio real,
+    CONSTRAINT prod_cod PRIMARY KEY (prod_cod),
+    CONSTRAINT categ_cod FOREIGN KEY (categ_cod)
+        REFERENCES public.categoria (categ_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT prov_cod FOREIGN KEY (prov_cod)
+        REFERENCES public.proveedor (prov_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.productos
+    OWNER to postgres;
+
+    -- Table: public.pedidos
+
+-- DROP TABLE IF EXISTS public.pedidos;
+
+CREATE TABLE IF NOT EXISTS public.pedidos
+(
+    pedido_cod integer NOT NULL DEFAULT nextval('pedidos_pedido_cod_seq'::regclass),
+    cliente_cod integer NOT NULL,
+    emp_cod integer NOT NULL,
+    transp_cod integer NOT NULL,
+    pedido_fecha date NOT NULL,
+    CONSTRAINT pedido_cod PRIMARY KEY (pedido_cod),
+    CONSTRAINT cliente_cod FOREIGN KEY (cliente_cod)
+        REFERENCES public.clientes (cliente_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT emp_cod FOREIGN KEY (emp_cod)
+        REFERENCES public.empleados (emp_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT transp FOREIGN KEY (transp_cod)
+        REFERENCES public.transportista (transp_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.pedidos
+    OWNER to postgres;
+
+    -- Table: public.pedidodetalles
+
+-- DROP TABLE IF EXISTS public.pedidodetalles;
+
+CREATE TABLE IF NOT EXISTS public.pedidodetalles
+(
+    deta_cod integer NOT NULL DEFAULT nextval('pedidodetalles_deta_cod_seq'::regclass),
+    pedido_cod integer NOT NULL,
+    prod_cod integer NOT NULL,
+    deta_cantidad integer,
+    CONSTRAINT deta_cod PRIMARY KEY (deta_cod),
+    CONSTRAINT pedido_cod FOREIGN KEY (pedido_cod)
+        REFERENCES public.pedidos (pedido_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT prod_cod FOREIGN KEY (prod_cod)
+        REFERENCES public.productos (prod_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.pedidodetalles
+    OWNER to postgres;
