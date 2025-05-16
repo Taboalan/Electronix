@@ -33,7 +33,7 @@ Venta de Productos Electronicos
 | **emp_nombre** | VARCHAR | not null |  | |
 | **emp_apellido** | VARCHAR | not null |  | |
 | **emp_tel** | INTEGER |not null |  | |
-| **emp_foto** | BINARIO | not null |  | |
+| **emp_direccion** | VARCHAR | not null |  | |
 
 
 ### clientes
@@ -65,7 +65,7 @@ Venta de Productos Electronicos
 | **pedido_cod** | INTEGER | not null, autoincrement | fk_pedido_pedido_cod_detalle_pedido | |
 | **cliente_cod** | INTEGER | not null |  | |
 | **emp_cod** | INTEGER | null |  | |
-| **pedido_fecha** | TIME | null |  | |
+| **pedido_fecha** | DATE | null |  | |
 | **transp_cod** | INTEGER | null |  | |
 
 
