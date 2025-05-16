@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS public.empleados
     emp_cod integer NOT NULL,
     emp_nombre character varying(40) COLLATE pg_catalog."default" NOT NULL,
     emp_apellido character varying(40) COLLATE pg_catalog."default" NOT NULL,
-    emp_nacimiento date,
+    emp_direccion character varying(40) COLLATE pg_catalog."default" NOT NULL,
     emp_tel integer,
     CONSTRAINT emp_cod PRIMARY KEY (emp_cod)
 )
