@@ -29,7 +29,7 @@ Venta de Productos Electronicos
 
 | Name        | Type          | Settings                      | References                    | Note                           |
 |-------------|---------------|-------------------------------|-------------------------------|--------------------------------|
-| **emp_cod** | INTEGER | 🔑 PK, not null, unique, autoincrement | | |
+| **emp_cod** | INTEGER | 🔑 PK, not null, unique, autoincrement |fk_empleados_emp_cod_pedido | |
 | **emp_nombre** | VARCHAR | not null |  | |
 | **emp_apellido** | VARCHAR | not null |  | |
 | **emp_tel** | INTEGER |not null |  | |
@@ -40,7 +40,7 @@ Venta de Productos Electronicos
 
 | Name        | Type          | Settings                      | References                    | Note                           |
 |-------------|---------------|-------------------------------|-------------------------------|--------------------------------|
-| **cliente_cod** | INTEGER | 🔑 PK, not null, unique, autoincrement |  | |
+| **cliente_cod** | INTEGER | 🔑 PK, not null, unique, autoincrement | fk_clientes_cliente_cod_pedido | |
 | **cliente_nombre** |VARCHAR  | not null |  | |
 | **cliente_apellido** | VARCHAR | not null |  | |
 | **cliente_direccion** | VARCHAR | not null |  | |
@@ -53,7 +53,7 @@ Venta de Productos Electronicos
 
 | Name        | Type          | Settings                      | References                    | Note                           |
 |-------------|---------------|-------------------------------|-------------------------------|--------------------------------|
-| **transp_cod** | INTEGER | 🔑 PK, not null, unique, autoincrement |  | |
+| **transp_cod** | INTEGER | 🔑 PK, not null, unique, autoincrement | fk_transportista_transp_cod_pedido | |
 | **transp_nombre** | VARCHAR | not null |  | |
 | **transp_telefono** | VARCHAR | not null |  | |
 
@@ -62,7 +62,7 @@ Venta de Productos Electronicos
 
 | Name        | Type          | Settings                      | References                    | Note                           |
 |-------------|---------------|-------------------------------|-------------------------------|--------------------------------|
-| **pedido_cod** | INTEGER | not null, autoincrement |  | |
+| **pedido_cod** | INTEGER | not null, autoincrement | fk_pedido_pedido_cod_detalle_pedido | |
 | **cliente_cod** | INTEGER | not null |  | |
 | **emp_cod** | INTEGER | null |  | |
 | **pedido_fecha** | TIME | null |  | |
@@ -73,7 +73,7 @@ Venta de Productos Electronicos
 
 | Name        | Type          | Settings                      | References                    | Note                           |
 |-------------|---------------|-------------------------------|-------------------------------|--------------------------------|
-| **prod_cod** | INTEGER | 🔑 PK, not null, unique, autoincrement | fk_productos_prod_cod_productos | |
+| **prod_cod** | INTEGER | 🔑 PK, not null, unique, autoincrement | fk_productos_prod_cod_detalle_pedido | |
 | **prod_nombre** | VARCHAR | not null |  | |
 | **prod_cantidad** | INTEGER | not null |  | |
 | **prov_cod** | INTEGER | not null |  | |
@@ -85,7 +85,7 @@ Venta de Productos Electronicos
 
 | Name        | Type          | Settings                      | References                    | Note                           |
 |-------------|---------------|-------------------------------|-------------------------------|--------------------------------|
-| **categ_cod** | INTEGER | 🔑 PK, not null, unique, autoincrement | fk_categoria_categ_cod_categoria | |
+| **categ_cod** | INTEGER | 🔑 PK, not null, unique, autoincrement | fk_categoria_categ_cod_productos | |
 | **categ_nombre** | VARCHAR | not null |  | |
 | **categ_descripcion** | VARCHAR | not null |  | |
 
@@ -94,7 +94,7 @@ Venta de Productos Electronicos
 
 | Name        | Type          | Settings                      | References                    | Note                           |
 |-------------|---------------|-------------------------------|-------------------------------|--------------------------------|
-| **prov_cod** | INTEGER | 🔑 PK, not null, unique, autoincrement | fk_proveedor_prov_cod_proveedor | |
+| **prov_cod** | INTEGER | 🔑 PK, not null, unique, autoincrement | fk_proveedor_prov_cod_productos | |
 | **prov_nombre** | VARCHAR | not null |  | |
 | **prov_nombrecontacto** | VARCHAR | not null |  | |
 | **prov_direccion** | VARCHAR | not null |  | |
